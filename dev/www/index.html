@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My Shooter</title>
+    <link rel="stylesheet" href="../src/css/styles.css">
+  </head>
+  <body>
+    <app></app>
+    <!-- <div id="player_display">
+      <h1>Players</h1>
+      <input id="username" size="40"/>
+      <button type="button" id="add_user" type="text">Add</button>
+      <ul id="players_list">
+
+      </ul>
+    </div>
+    <div id="ships_display">
+      <h1>The ships</h1>
+      <ul id="ships_list">
+
+      </ul>
+    </div>
+    <div id="game_display">
+      <h1>My Shooter</h1>
+      <canvas id="myCanvas" width="900" height="320"></canvas>
+    </div>
+
+    <div id="board">
+      <button type="button" name="play" id="play">Play</button>
+      <button type="button" name="pause" id="pause">Pause</button>
+      <h1 id="score">Score: <span></span></h1>
+    </div> -->
+    <script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyBF0sm5CqO1yg9zfPxyWpJ2AaMGLadT7dw",
+        authDomain: "myspaceshooter-bbf0c.firebaseapp.com",
+        databaseURL: "https://myspaceshooter-bbf0c.firebaseio.com",
+        storageBucket: "myspaceshooter-bbf0c.appspot.com",
+        messagingSenderId: "325051456673"
+      };
+      // firebase.initializeApp(config);
+      //
+      // let database = firebase.database();
+      // let ships = database.ref('ships').orderByKey().limitToLast(10);
+      // let players = database.ref('players');
+
+      // ships.on('value', (snapshot) => {
+      //
+      //   snapshot.forEach(ship => {
+      //       document.getElementById('ships_list').innerHTML += '<li>' + ship.key +' '+ ship.val().name + '</li>';
+      //   });
+      // });
+
+      // ships.on('child_added', (snapshot) => {
+      //   document.getElementById('ships_list_child_added').innerHTML += '<li>' + snapshot.key +' '+ snapshot.val().name + '</li>';
+      // });
+
+      // players.on('value', (snapshot) => {
+      //   document.getElementById('players_list').innerHTML = "";
+      //   snapshot.forEach(player => {
+      //     let name = player.val().name;
+      //     let key = player.key;
+      //     document.getElementById('players_list').innerHTML +=
+      //     `<li> ${name}//${key}<button name="del_user" type="button" value="${key}">X</button></li>`;
+      //   });
+      // });
+
+      // window.addEventListener('load', _ => {
+      //   document.getElementById('add_user').addEventListener('click', _ =>{
+      //     var username = document.getElementById('username').value;
+      //     database.ref('players').push({
+      //         'name': username,
+      //         'level': 0,
+      //         'best_score': 0,
+      //         'last_score': 0,
+      //         'score': 0
+      //     }, (error) => {
+      //       if(error){
+      //         console.log('An error has occured: ${error}');
+      //       }
+      //       else {
+      //         console.log('Player has been saved successfully!!');
+      //       }
+      //     });
+      //   });
+      //
+      //   document.getElementById('players_list').querySelectorAll('[name=del_user]');
+      // });
+    </script>
+    <script src="../../dist/js/bundle.js"></script>
+    <!-- <script src="js/main.js"></script> -->
+  </body>
+</html>

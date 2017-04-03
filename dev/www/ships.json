@@ -1,0 +1,23 @@
+{
+  "ships": {
+    "eraser_ship": {
+        "name": "Eraser",
+        "speed": 4,
+        "color": "red",
+        "type": "friendlyShip"
+
+    },
+    "ball_ship": {
+        "name": "DeathBall",
+        "speed": 2,
+        "color": "blue",
+        "type": "ennemyShip"
+    },
+    "x_wing_ship": {
+        "name": "XWing",
+        "speed": 6,
+        "color": "grey",
+        "type": "friendlyShip"
+    }
+  }
+}
