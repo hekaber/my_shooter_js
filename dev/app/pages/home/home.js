@@ -6,7 +6,6 @@ export class HomePage {
     this.appBody = appBody;
     this.pageTitle = 'My Shooter';
     this.initUI();
-
   }
 
   initUI(){
@@ -19,16 +18,12 @@ export class HomePage {
     let pageSkeleton = this.getPageSkeleton();
 
     this.appBody.insertAdjacentHTML('afterBegin', pageSkeleton);
-    // let pageSkeleton ) = `
-    //   <section>
-    //     <h1>${this.pageTitle}</h1>
-    //   </section>
-    // `;
   }
 
   getPageSkeleton(){
     let data = {};
     data.pageTitle = this.pageTitle;
+    data.gameTitle = this.gameTitle;
 
     return homeSkeleton(data);
   }
