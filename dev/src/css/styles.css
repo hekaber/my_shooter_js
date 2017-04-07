@@ -8,3 +8,12 @@ canvas {
   display: block;
   margin: 0 auto;
 }
+
+*.displayBackground {
+  opacity: 0;
+}
+
+*.fadeIn {
+  opacity: 1;
+  transition: 0.2s ease;
+}

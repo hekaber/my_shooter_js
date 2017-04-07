@@ -1,6 +1,6 @@
 // dev/app/pages/home/home.js
 import {homeSkeleton} from './home.ui';
-import { ShooterPage } from '../shooter/shooter.js';
+import { ShooterComponent } from '../../components/shooter/shooter.js';
 import { UnsplashService } from '../../providers/unsplash/unsplash-service.js';
 
 export class HomePage {
@@ -27,7 +27,7 @@ export class HomePage {
   }
 
   initShooterPage(){
-    this.shooterPage = new ShooterPage(document.getElementsByTagName('section')[0]);
+    this.shooterPage = new ShooterComponent(document.getElementsByTagName('section')[0]);
     this.shooterPage.refreshCanvas();
   }
 
@@ -62,9 +62,16 @@ export class HomePage {
       pageContainer.style.padding = `0px`;
       pageContainer.style.textAlign = `center`;
       pageContainer.style.color = `#fff`;
-      pageContainer.style.opacity = `1`;
+
+      let img = new Image();
+      img.src = data[0].urls.regular;
+
       pageContainer.style.background = `url(${data[0].urls.regular}) center center no-repeat`;
       pageContainer.style.backgroundSize = `cover`;
+
+      img.addEventListener('load', event => {
+        pageContainer.classList.add('fadeIn');
+      });
 
     }
   }

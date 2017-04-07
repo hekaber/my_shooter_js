@@ -3,70 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>My Shooter</title>
-    <link rel="stylesheet" href="../src/css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
   </head>
   <body>
     <app></app>
     <script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyBF0sm5CqO1yg9zfPxyWpJ2AaMGLadT7dw",
-        authDomain: "myspaceshooter-bbf0c.firebaseapp.com",
-        databaseURL: "https://myspaceshooter-bbf0c.firebaseio.com",
-        storageBucket: "myspaceshooter-bbf0c.appspot.com",
-        messagingSenderId: "325051456673"
-      };
-      // firebase.initializeApp(config);
-      //
-      // let database = firebase.database();
-      // let ships = database.ref('ships').orderByKey().limitToLast(10);
-      // let players = database.ref('players');
-
-      // ships.on('value', (snapshot) => {
-      //
-      //   snapshot.forEach(ship => {
-      //       document.getElementById('ships_list').innerHTML += '<li>' + ship.key +' '+ ship.val().name + '</li>';
-      //   });
-      // });
-
-      // ships.on('child_added', (snapshot) => {
-      //   document.getElementById('ships_list_child_added').innerHTML += '<li>' + snapshot.key +' '+ snapshot.val().name + '</li>';
-      // });
-
-      // players.on('value', (snapshot) => {
-      //   document.getElementById('players_list').innerHTML = "";
-      //   snapshot.forEach(player => {
-      //     let name = player.val().name;
-      //     let key = player.key;
-      //     document.getElementById('players_list').innerHTML +=
-      //     `<li> ${name}//${key}<button name="del_user" type="button" value="${key}">X</button></li>`;
-      //   });
-      // });
-
-      // window.addEventListener('load', _ => {
-      //   document.getElementById('add_user').addEventListener('click', _ =>{
-      //     var username = document.getElementById('username').value;
-      //     database.ref('players').push({
-      //         'name': username,
-      //         'level': 0,
-      //         'best_score': 0,
-      //         'last_score': 0,
-      //         'score': 0
-      //     }, (error) => {
-      //       if(error){
-      //         console.log('An error has occured: ${error}');
-      //       }
-      //       else {
-      //         console.log('Player has been saved successfully!!');
-      //       }
-      //     });
-      //   });
-      //
-      //   document.getElementById('players_list').querySelectorAll('[name=del_user]');
-      // });
-    </script>
     <script src="../../dist/js/bundle.js"></script>
-    <!-- <script src="js/main.js"></script> -->
   </body>
 </html>

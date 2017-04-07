@@ -1,14 +1,14 @@
 import {shooterSkeleton} from './shooter.ui';
 import {Ship} from '../../providers/ship';
 
-export class ShooterPage {
+export class ShooterComponent {
 
   constructor(homeSection){
     this.homeSection = homeSection;
     this.gameTitle = 'My Shooter Game';
     this.shipsHeader = 'Available ships';
+    this.content = document.getElementById('game_display');
     this.initUI();
-
 
     this.canvas = document.getElementById('shooterCanvas');
     this.ctx = document.getElementById('shooterCanvas').getContext("2d");
@@ -16,10 +16,8 @@ export class ShooterPage {
   }
 
   initUI(){
-    let gameDisplay = document.getElementById('game_display');
-    
-    if(gameDisplay){
-      gameDisplay.parentNode.removeChild(gameDisplay);
+    if(this.content){
+      gameDisplay.parentNode.removeChild(this.content);
     }
 
     let pageSkeleton = this.getPageSkeleton();

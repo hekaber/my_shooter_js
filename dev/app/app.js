@@ -10,9 +10,9 @@ class MyShooterApp {
   start(){
     let homePage = new HomePage(this.appBody);
 
-    let timer = setInterval( _ => {
-      shooterPage.refreshCanvas();
-    }, 1000);
+    // let timer = setInterval( _ => {
+    //   shooterPage.refreshCanvas();
+    // }, 1000);
   }
 }
 
