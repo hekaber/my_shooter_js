@@ -3,8 +3,8 @@ import {Ship} from '../../providers/ship';
 
 export class ShooterPage {
 
-  constructor(appBody){
-    this.appBody = appBody;
+  constructor(homeSection){
+    this.homeSection = homeSection;
     this.gameTitle = 'My Shooter Game';
     this.shipsHeader = 'Available ships';
     this.initUI();
@@ -16,24 +16,21 @@ export class ShooterPage {
   }
 
   initUI(){
-    if(document.getElementsByTagName('section')[1]){
-      document.getElementsByTagName('section')[1]
-      .parentNode.removeChild(document.getElementsByTagName('section')[1]);
+    let gameDisplay = document.getElementById('game_display');
+    
+    if(gameDisplay){
+      gameDisplay.parentNode.removeChild(gameDisplay);
     }
 
     let pageSkeleton = this.getPageSkeleton();
 
-    this.appBody.insertAdjacentHTML('beforeEnd', pageSkeleton);
+    this.homeSection.insertAdjacentHTML('beforeEnd', pageSkeleton);
   }
 
   refreshCanvas(){
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ship.draw();
   }
-
-  // launchTimer(){
-  //   this.timer = setInterval(this.refreshCanvas, 1000);
-  // }
 
   getPageSkeleton(){
     let data = {}
