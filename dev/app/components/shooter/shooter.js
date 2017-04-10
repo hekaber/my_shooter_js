@@ -13,6 +13,20 @@ export class ShooterComponent {
     this.canvas = document.getElementById('shooterCanvas');
     this.ctx = document.getElementById('shooterCanvas').getContext("2d");
     this.ship = new Ship(this.ctx, 100, this.canvas.height/2, 25);
+    this.timer = null;
+
+    // add eventlisteners on play and pause buttons
+    document.getElementById("play").addEventListener('click', _ => {
+      this.timer = setInterval( _ => {
+        this.refreshCanvas();
+      }, 1000);
+    });
+
+    document.getElementById("pause").addEventListener('click', _ => {
+      if(this.timer){
+        clearInterval(this.timer);
+      }
+    });
   }
 
   initUI(){
@@ -28,6 +42,7 @@ export class ShooterComponent {
   refreshCanvas(){
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ship.draw();
+    console.log("yo!!");
   }
 
   getPageSkeleton(){
