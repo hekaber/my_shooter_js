@@ -48,9 +48,6 @@ export class ShooterComponent {
   initCanvas(){
     this.canvasManager.draw();
   }
-  // refreshCanvas(){
-  //   this.canvasManager.refresh();
-  // }
 
   getPageSkeleton(){
     let data = {}
