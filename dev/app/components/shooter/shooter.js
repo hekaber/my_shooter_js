@@ -25,16 +25,12 @@ export class ShooterComponent {
     document.getElementById("play").addEventListener('click', _ => {
       this.canvasManager.setKeyListeners();
       this.canvasManager.startAnimate();
-      // this.timer = setInterval( _ => {
-      //   this.refreshCanvas();
-      // }, 10);
     });
 
     document.getElementById("pause").addEventListener('click', _ => {
       if(this.timer){
         this.canvasManager.unsetKeyListeners();
         this.canvasManager.stopAnimate();
-        // clearInterval(this.timer);
       }
     });
   }
