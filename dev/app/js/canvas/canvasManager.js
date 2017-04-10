@@ -1,4 +1,5 @@
 import {Ship} from '../game/ship';
+import {Bullet} from '../game/bullet';
 import {CanvasException} from '../exceptions/canvas';
 import {ControlManager} from '../control/controlManager'
 
@@ -27,6 +28,7 @@ export class CanvasManager {
     }
 
     this.ship = new Ship(this.ctx, 100, this.canvas.height/2, 25);
+    this.bullets = [];
     this.controlManager = null;
   }
 
@@ -55,31 +57,38 @@ export class CanvasManager {
   }
 
   draw(){
-    let dx_fire = 5;
-    let dy = 2;
-
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ship.draw();
     if (this.controlManager){
       if(this.controlManager.firePressed){
         console.log('fire!!');
-        // bullet.x = triangle.x;
-        // bullet.y = triangle.y;
-        //
-        // my_bullets.push(bullet);
-        // firePressed = false;
+        this.bullets.push(new Bullet(this.ctx, this.ship.x, this.ship.y, 5, 5));
+        this.controlManager.firePressed = false;
       }
-      else if(this.controlManager.upPressed &&
-        this.ship.y - this.ship.size + dy > 0){
-
-        this.ship.y -= dy;
+      else if(this.controlManager.upPressed && this.ship.isOverZero()){
+        this.ship.moveUp();
       }
       else if(this.controlManager.downPressed &&
-        this.ship.y + this.ship.size + dy < this.canvas.height){
+        this.ship.isUnderHeight(this.canvas.height)){
 
-        this.ship.y += dy;
+        this.ship.moveDown();
       }
     }
+    this.draw_bullets();
+  }
+
+  draw_bullets(){
+    this.bullets.forEach((element, index) => {
+      if(element.x >= 0){
+        //test if element is a circle
+        element.move();
+        element.draw();
+        this.bullets[index] = element;
+      }
+      else {
+        this.bullets.splice(index, 1);
+      }
+    });
   }
 
   setKeyListeners(){
