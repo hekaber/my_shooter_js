@@ -1,5 +1,5 @@
 import {shooterSkeleton} from './shooter.ui';
-import {Ship} from '../../providers/ship';
+import {CanvasManager} from '../../js/canvas/canvasManager';
 
 export class ShooterComponent {
 
@@ -10,20 +10,28 @@ export class ShooterComponent {
     this.content = document.getElementById('game_display');
     this.initUI();
 
-    this.canvas = document.getElementById('shooterCanvas');
-    this.ctx = document.getElementById('shooterCanvas').getContext("2d");
-    this.ship = new Ship(this.ctx, 100, this.canvas.height/2, 25);
+    try {
+      this.canvasManager = new CanvasManager(
+        document.getElementById('shooterCanvas').getContext("2d"),
+        document.getElementById('shooterCanvas')
+      );
+    } catch(e){
+      console.log(e.message, e.name);
+    }
+
     this.timer = null;
 
     // add eventlisteners on play and pause buttons
     document.getElementById("play").addEventListener('click', _ => {
+      this.canvasManager.setKeyListeners();
       this.timer = setInterval( _ => {
         this.refreshCanvas();
-      }, 1000);
+      }, 10);
     });
 
     document.getElementById("pause").addEventListener('click', _ => {
       if(this.timer){
+        this.canvasManager.unsetKeyListeners();
         clearInterval(this.timer);
       }
     });
@@ -40,9 +48,7 @@ export class ShooterComponent {
   }
 
   refreshCanvas(){
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ship.draw();
-    console.log("yo!!");
+    this.canvasManager.refresh();
   }
 
   getPageSkeleton(){
