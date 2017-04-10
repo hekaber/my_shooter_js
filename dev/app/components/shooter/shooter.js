@@ -24,22 +24,24 @@ export class ShooterComponent {
     // add eventlisteners on play and pause buttons
     document.getElementById("play").addEventListener('click', _ => {
       this.canvasManager.setKeyListeners();
-      this.timer = setInterval( _ => {
-        this.refreshCanvas();
-      }, 10);
+      this.canvasManager.startAnimate();
+      // this.timer = setInterval( _ => {
+      //   this.refreshCanvas();
+      // }, 10);
     });
 
     document.getElementById("pause").addEventListener('click', _ => {
       if(this.timer){
         this.canvasManager.unsetKeyListeners();
-        clearInterval(this.timer);
+        this.canvasManager.stopAnimate();
+        // clearInterval(this.timer);
       }
     });
   }
 
   initUI(){
     if(this.content){
-      gameDisplay.parentNode.removeChild(this.content);
+      this.content.parentNode.removeChild(this.content);
     }
 
     let pageSkeleton = this.getPageSkeleton();
@@ -47,9 +49,12 @@ export class ShooterComponent {
     this.homeSection.insertAdjacentHTML('beforeEnd', pageSkeleton);
   }
 
-  refreshCanvas(){
-    this.canvasManager.refresh();
+  initCanvas(){
+    this.canvasManager.draw();
   }
+  // refreshCanvas(){
+  //   this.canvasManager.refresh();
+  // }
 
   getPageSkeleton(){
     let data = {}

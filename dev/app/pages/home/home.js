@@ -8,7 +8,7 @@ export class HomePage {
     this.appBody = appBody;
     this.pageTitle = 'My Shooter';
     this.initUI();
-    this.initShooterPage();
+    this.initShooter();
 
   }
 
@@ -26,9 +26,9 @@ export class HomePage {
 
   }
 
-  initShooterPage(){
-    this.shooterPage = new ShooterComponent(document.getElementsByTagName('section')[0]);
-    this.shooterPage.refreshCanvas();
+  initShooter(){
+    this.shooter = new ShooterComponent(document.getElementsByTagName('section')[0]);
+    this.shooter.initCanvas();
   }
 
   getPageSkeleton(){
