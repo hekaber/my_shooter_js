@@ -9,7 +9,7 @@ export class HomePage {
     this.pageTitle = 'My Shooter';
     this.initUI();
     this.initShooter();
-
+    //fuck!!!
   }
 
   initUI(){

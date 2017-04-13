@@ -1,10 +1,11 @@
-import {Shape} from './shape';
+import {Shape, SHAPE_TYPE} from './shape';
 
 export class Bullet extends Shape {
   constructor(ctx, coordX, coordY, width, height){
     super(ctx, coordX, coordY);
     this.width = width;
     this.height = height;
+    this.type = SHAPE_TYPE.BULLET;
     this.dx = 5;
   }
 

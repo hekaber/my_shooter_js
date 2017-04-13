@@ -19,8 +19,6 @@ export class ShooterComponent {
       console.log(e.message, e.name);
     }
 
-    this.timer = null;
-
     // add eventlisteners on play and pause buttons
     document.getElementById("play").addEventListener('click', _ => {
       this.canvasManager.setKeyListeners();
@@ -28,10 +26,8 @@ export class ShooterComponent {
     });
 
     document.getElementById("pause").addEventListener('click', _ => {
-      if(this.timer){
-        this.canvasManager.unsetKeyListeners();
-        this.canvasManager.stopAnimate();
-      }
+      this.canvasManager.unsetKeyListeners();
+      this.canvasManager.stopAnimate();
     });
   }
 

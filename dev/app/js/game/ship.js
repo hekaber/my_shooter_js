@@ -1,9 +1,12 @@
-import { Shape } from './shape';
+import { Shape, SHAPE_TYPE } from './shape';
 
 export class Ship extends Shape {
   constructor(ctx, coordX, coordY, size){
     super(ctx, coordX, coordY);
     this.size = size;
+    this.width = size * 2;
+    this.height = size * 2;
+    this.type = SHAPE_TYPE.SHIP;
     this.dy = 2;
   }
 
