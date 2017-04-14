@@ -10,7 +10,7 @@ export class SimpleEnnemy extends Shape {
     this.type = SHAPE_TYPE.S_ENNEMY;
     this.startAngle = startAngle;
     this.endAngle = endAngle;
-    this.dx = 1;
+    this.dx = 5;
   }
 
   draw(){

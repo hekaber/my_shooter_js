@@ -10,10 +10,11 @@ const FRAMES_PER_SEC = 60;
 export class CanvasManager {
   constructor(ctx, canvas){
     this.animreqID = 0;
-    this.fps = 60;
+    this.fps = 30;
     this.fpsInterval = 1000 / this.fps;
     this.startTime = 0;
     this.then = 0;
+
     //ennemyAppereance between every 100ms and 1s
     this.ennemyAppereance = Math.floor(Math.random() * 100) + 10;
 
@@ -25,7 +26,7 @@ export class CanvasManager {
         y: 0,
         width: canvas.width,
         height: canvas.height
-      }, 4, 20);
+      }, 5, 10);
     }
     else {
       throw new CanvasException("Canvas is undefined!!!");

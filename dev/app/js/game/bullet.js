@@ -6,7 +6,7 @@ export class Bullet extends Shape {
     this.width = width;
     this.height = height;
     this.type = SHAPE_TYPE.BULLET;
-    this.dx = 5;
+    this.dx = 7;
   }
 
   draw(){

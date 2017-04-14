@@ -7,7 +7,7 @@ export class Ship extends Shape {
     this.width = size * 2;
     this.height = size * 2;
     this.type = SHAPE_TYPE.SHIP;
-    this.dy = 2;
+    this.dy = 4;
   }
 
   draw(){
