@@ -1,6 +1,7 @@
 // dev/app/pages/home/home.js
 import {homeSkeleton} from './home.ui';
 import { ShooterComponent } from '../../components/shooter/shooter.js';
+import { FacebookComponent } from '../../components/facebook/facebook.js';
 import { UnsplashService } from '../../providers/unsplash/unsplash-service.js';
 
 export class HomePage {
@@ -9,7 +10,7 @@ export class HomePage {
     this.pageTitle = 'My Shooter';
     this.initUI();
     this.initShooter();
-    //fuck!!!
+    this.initFBUI();
   }
 
   initUI(){
@@ -29,6 +30,10 @@ export class HomePage {
   initShooter(){
     this.shooter = new ShooterComponent(document.getElementsByTagName('section')[0]);
     this.shooter.initCanvas();
+  }
+
+  initFBUI(){
+    this.fbUI = new FacebookComponent(document.getElementsByTagName('section')[0]);
   }
 
   getPageSkeleton(){
