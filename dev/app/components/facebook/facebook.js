@@ -11,10 +11,14 @@ export class FacebookComponent {
 
     document.getElementById("fblogin").addEventListener('click', _=> {
       this.fbService.checkLoginState();
-      if(this.fbService.isConnected){
-        this.fbService.logout();
-        document.getElementById('fblogin').innerHTML = "Login with Facebook";
-      }
+      // if(this.fbService.isConnected){
+      //   this.fbService.logout();
+      //   document.getElementById('fblogin').innerHTML = "Login with Facebook";
+      // }
+    });
+
+    document.getElementById('getfriends').addEventListener('click', _ => {
+      this.fbService.fetchAvatars((response) => this.displayAvatars(response));
     });
   }
 
@@ -45,6 +49,10 @@ export class FacebookComponent {
       document.getElementById('status').innerHTML =
         'Please log into this app.';
     }
+  }
+
+  displayAvatars(response){
+    
   }
 
   updateLoginState(){

@@ -1,5 +1,6 @@
 import {shooterSkeleton} from './shooter.ui';
 import {CanvasManager} from '../../js/canvas/canvasManager';
+import { ImagesPreloader } from '../../providers/imagesPreloader';
 
 export class ShooterComponent {
 
@@ -10,6 +11,29 @@ export class ShooterComponent {
     this.content = document.getElementById('game_display');
     this.initUI();
 
+    this.imagesPreloader = new ImagesPreloader(
+        ['../img/warrior_1.png'],
+        this.initCanvasManager()
+    );
+
+    console.log(this.imagesPreloader);
+    // this.initCanvasManager([]);
+    // add eventlisteners on play and pause buttons
+    document.getElementById("play").addEventListener('click', _ => {
+      let images = this.imagesPreloader.getImages();
+      console.log(this.imagesPreloader._aImages);
+      this.canvasManager.initShapesWithImages(images);
+      this.startGame();
+    });
+
+    document.getElementById("pause").addEventListener('click', _ => {
+      this.pauseGame();
+    });
+  }
+
+  initCanvasManager(){
+    console.log(this);
+    console.log('loaded!!!!!!!!!!');
     try {
       this.canvasManager = new CanvasManager(
         document.getElementById('shooterCanvas').getContext("2d"),
@@ -18,17 +42,18 @@ export class ShooterComponent {
     } catch(e){
       console.log(e.message, e.name);
     }
+  }
 
-    // add eventlisteners on play and pause buttons
-    document.getElementById("play").addEventListener('click', _ => {
-      this.canvasManager.setKeyListeners();
-      this.canvasManager.startAnimate();
-    });
+  startGame(){
+    this.canvasManager.draw();
 
-    document.getElementById("pause").addEventListener('click', _ => {
-      this.canvasManager.unsetKeyListeners();
-      this.canvasManager.stopAnimate();
-    });
+    this.canvasManager.setKeyListeners();
+    this.canvasManager.startAnimate();
+  }
+
+  pauseGame(){
+    this.canvasManager.unsetKeyListeners();
+    this.canvasManager.stopAnimate();
   }
 
   initUI(){
@@ -39,10 +64,6 @@ export class ShooterComponent {
     let pageSkeleton = this.getPageSkeleton();
 
     this.homeSection.insertAdjacentHTML('beforeEnd', pageSkeleton);
-  }
-
-  initCanvas(){
-    this.canvasManager.draw();
   }
 
   getPageSkeleton(){

@@ -39,12 +39,16 @@ export class CanvasManager {
       throw new CanvasException("Context is undefined!!");
     }
 
-    this.ship = new Ship(this.ctx, 100, this.canvas.height/2, 25);
+    this.ship = new Ship(this.ctx, 100, this.canvas.height/2, 25, null);
 
     this.bullets = {};
     this.ennemies = {};
     this.controlManager = null;
 
+  }
+
+  initShapesWithImages(images){
+    this.ship = new Ship(this.ctx, 100, this.canvas.height/2, 25, images['warrior_1']);
   }
 
   startAnimate(){

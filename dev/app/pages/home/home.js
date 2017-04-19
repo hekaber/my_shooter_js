@@ -29,7 +29,6 @@ export class HomePage {
 
   initShooter(){
     this.shooter = new ShooterComponent(document.getElementsByTagName('section')[0]);
-    this.shooter.initCanvas();
   }
 
   initFBUI(){

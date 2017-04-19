@@ -26,17 +26,30 @@ export class FaceBookService {
     // app know the current login status of the person.
     // Full docs on the response object can be found in the documentation
     // for FB.getLoginStatus().
-    this.statusCallback(response);
+    console.log(response);
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       // if(this.authResponse !== null)
       this.authResponse = response.authResponse;
+      this.userId = response.authResponse.userID;
+      this.accessToken = response.authResponse.accessToken;
       this.isConnected = true;
+      this.statusCallback(response);
+
     }
     else {
       // The person is not logged into your app or we are unable to tell.
-      FB.login();
+      FB.login(function(response){
+        console.log(response);
+      }, {scope: 'user_friends, user_photos'});
     }
 
   }
+
+  fetchAvatars(callback){
+    FB.api(this.userId + '/albums', function (response) {
+      console.log('Got friends: ', response.data);
+    });
+  }
+
 }
