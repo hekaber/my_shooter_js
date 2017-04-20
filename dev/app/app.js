@@ -11,16 +11,16 @@ class MyShooterApp {
   start(){
     let homePage = new HomePage(this.appBody);
     //init facebook SDK
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : FB_APP_ID,
-        xfbml      : true,
-        version    : 'v2.8'
-      });
-      FB.AppEvents.logPageView();
-    };
-
-    this.insertFBAPI();
+    // window.fbAsyncInit = function() {
+    //   FB.init({
+    //     appId      : FB_APP_ID,
+    //     xfbml      : true,
+    //     version    : 'v2.8'
+    //   });
+    //   FB.AppEvents.logPageView();
+    // };
+    //
+    // this.insertFBAPI();
   }
 
   insertFBAPI(){

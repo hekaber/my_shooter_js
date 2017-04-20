@@ -2,23 +2,12 @@ import { Shape, SHAPE_TYPE } from './shape';
 
 // simple ennemy is a canvas circle
 export class SimpleEnnemy extends Shape {
-  constructor(ctx, coordX, coordY, radius, startAngle, endAngle){
-    super(ctx, coordX, coordY);
-    this.radius = radius;
-    this.width = radius * 2;
-    this.height = radius * 2;
+  constructor(ctx, coordX, coordY, image){
+    super(ctx, coordX, coordY, image);
+    this.width = Math.floor(image.width * 0.25);
+    this.height = Math.floor(image.height * 0.25);
     this.type = SHAPE_TYPE.S_ENNEMY;
-    this.startAngle = startAngle;
-    this.endAngle = endAngle;
     this.dx = 5;
-  }
-
-  draw(){
-    this.ctx.beginPath();
-    this.ctx.arc(this.x, this.y, this.radius, this.startAngle,
-      this.endAngle, true);
-    this.ctx.fill();
-    this.ctx.closePath();
   }
 
   move(){

@@ -10,19 +10,23 @@ export class ShooterComponent {
     this.shipsHeader = 'Available ships';
     this.content = document.getElementById('game_display');
     this.initUI();
+    let images = null;
 
     this.imagesPreloader = new ImagesPreloader(
-        ['../img/warrior_1.png'],
-        this.initCanvasManager()
+        ['../img/warrior_1.png',
+         '../img/bullet_1.png',
+         '../img/drone_1_reverse.png'
+        ],
+        this.initCanvasManager(images)
     );
 
     console.log(this.imagesPreloader);
-    // this.initCanvasManager([]);
+
     // add eventlisteners on play and pause buttons
     document.getElementById("play").addEventListener('click', _ => {
       let images = this.imagesPreloader.getImages();
-      console.log(this.imagesPreloader._aImages);
-      this.canvasManager.initShapesWithImages(images);
+      this.canvasManager.setImages(images)
+      this.canvasManager.createShip();
       this.startGame();
     });
 
@@ -32,13 +36,13 @@ export class ShooterComponent {
   }
 
   initCanvasManager(){
-    console.log(this);
-    console.log('loaded!!!!!!!!!!');
     try {
       this.canvasManager = new CanvasManager(
         document.getElementById('shooterCanvas').getContext("2d"),
         document.getElementById('shooterCanvas')
       );
+
+
     } catch(e){
       console.log(e.message, e.name);
     }

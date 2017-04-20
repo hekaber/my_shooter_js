@@ -14,10 +14,9 @@ export class CanvasManager {
     this.fpsInterval = 1000 / this.fps;
     this.startTime = 0;
     this.then = 0;
-
+    this.images = null;
     //ennemyAppereance between every 100ms and 1s
     this.ennemyAppereance = Math.floor(Math.random() * 100) + 10;
-
 
     if (canvas) {
       this.canvas = canvas;
@@ -39,7 +38,7 @@ export class CanvasManager {
       throw new CanvasException("Context is undefined!!");
     }
 
-    this.ship = new Ship(this.ctx, 100, this.canvas.height/2, 25, null);
+    this.ship = null;
 
     this.bullets = {};
     this.ennemies = {};
@@ -47,8 +46,13 @@ export class CanvasManager {
 
   }
 
-  initShapesWithImages(images){
-    this.ship = new Ship(this.ctx, 100, this.canvas.height/2, 25, images['warrior_1']);
+  setImages(images){
+    this.images = images;
+  }
+
+  createShip(){
+    this.ship = new Ship(this.ctx, 100, this.canvas.height/2, 25,
+      this.images['warrior_1']);
   }
 
   startAnimate(){
@@ -82,8 +86,12 @@ export class CanvasManager {
     this.ship.draw();
     if (this.controlManager){
       if(this.controlManager.firePressed){
-        console.log('fire!!');
-        let bullet = new Bullet(this.ctx, this.ship.x, this.ship.y, 5, 5);
+
+        let bullet = new Bullet(this.ctx, this.ship.bullet_start.x,
+          this.ship.bullet_start.y, this.images['bullet_1']);
+        // console.log('fire!! bID ' + bullet.ID + 'bullet_start_x ' + this.ship.bullet_start.x +
+        //   ' bullet_start_y ' + this.ship.bullet_start.y
+        // );
         this.bullets[bullet.ID] = bullet
         this.controlManager.firePressed = false;
       }
@@ -99,17 +107,11 @@ export class CanvasManager {
     this.ennemyAppereance--;
     //ennemyAppearance draws circle every random time * 10ms
     if(this.ennemyAppereance < 0){
-      // constructor(ctx, coordX, coordY, radius, startAngle, endAngle)
-      let radius = 20;
 
-      let ennemy = new SimpleEnnemy(
-          this.ctx,
-          this.canvas.width - radius/2,
-          Math.floor(Math.random() * (this.canvas.height - 2*radius)) + 2*radius,
-          radius,
-          0,
-          Math.PI * 2
-        );
+      let ennemyImage = this.images['drone_1_reverse'];
+      let ennemyX = this.canvas.width;
+      let ennemyY = Math.floor(Math.random()*(this.canvas.height - Math.floor(ennemyImage.height * 0.25))) + 2 * Math.floor(ennemyImage.height * 0.25);
+      let ennemy = new SimpleEnnemy(this.ctx, ennemyX, ennemyY, ennemyImage);
       this.ennemies[ennemy.ID] = ennemy;
 
       this.ennemyAppereance = Math.floor(Math.random() * 100) + 10;
@@ -124,20 +126,24 @@ export class CanvasManager {
       // Quadtree.retrieve returns an array
       let candidates = this.quadTree.retrieve(bullet);
       candidates.forEach((candidate) => {
-        if(candidate.type !== SHAPE_TYPE.BULLET){
-          if(bullet.x >= (candidate.x - candidate.radius) && bullet.x <= (candidate.x + candidate.radius)
-            && bullet.y >= (candidate.y - candidate.radius) && bullet.y <= (candidate.y + candidate.radius)){
-              this.quadTree.removeObject(bullet);
-              this.quadTree.removeObject(candidate);
-              delete this.bullets[bullet.ID];
-              delete this.ennemies[candidate.ID];
+        let my_candidates = [];
+        if(candidate.type == SHAPE_TYPE.S_ENNEMY){
+          my_candidates.push(candidate);
+          if(bullet.hits(candidate)){
+            this.quadTree.removeObject(bullet);
+            this.quadTree.removeObject(candidate);
+            delete this.bullets[bullet.ID];
+            delete this.ennemies[candidate.ID];
           }
         }
+        // console.log('candidates for bullet ' + bullet.ID + ' coordx ' + bullet.x + ' coordy ' + bullet.y + ' candidates ');
+        // console.log(my_candidates);
       });
       this.quadTree.cleanup();
     }
 
     this.bullets = this.draw_elements(this.bullets);
+    console.log(this.bullets);
     this.ennemies = this.draw_elements(this.ennemies);
 
   }
@@ -145,7 +151,18 @@ export class CanvasManager {
   draw_elements(elements){
     for(var key in elements){
       let element = elements[key];
-      if(element.x >= 0){
+      let condition = false;
+      switch (element.type) {
+        case SHAPE_TYPE.BULLET:
+          condition = element.x <= this.canvas.width;
+          break;
+        case SHAPE_TYPE.S_ENNEMY:
+          condition = element.x + element.width >= 0;
+        default:
+          console.log('Not an existing type!!!');
+      }
+
+      if(condition){
         element.move();
         element.draw();
         elements[key] = element;
