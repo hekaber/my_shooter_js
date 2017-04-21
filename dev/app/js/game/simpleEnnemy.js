@@ -8,6 +8,10 @@ export class SimpleEnnemy extends Shape {
     this.height = Math.floor(image.height * 0.25);
     this.type = SHAPE_TYPE.S_ENNEMY;
     this.dx = 5;
+    this.front = {
+      x: this.x,
+      y: this.y + Math.floor(this.height/2)
+    }
   }
 
   move(){

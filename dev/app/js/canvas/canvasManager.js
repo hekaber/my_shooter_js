@@ -15,6 +15,11 @@ export class CanvasManager {
     this.startTime = 0;
     this.then = 0;
     this.images = null;
+    this.ship = null;
+    this.bullets = {};
+    this.ennemies = {};
+    this.controlManager = null;
+
     //ennemyAppereance between every 100ms and 1s
     this.ennemyAppereance = Math.floor(Math.random() * 100) + 10;
 
@@ -25,7 +30,7 @@ export class CanvasManager {
         y: 0,
         width: canvas.width,
         height: canvas.height
-      }, 5, 10);
+      }, 5, 5);
     }
     else {
       throw new CanvasException("Canvas is undefined!!!");
@@ -37,13 +42,6 @@ export class CanvasManager {
     else {
       throw new CanvasException("Context is undefined!!");
     }
-
-    this.ship = null;
-
-    this.bullets = {};
-    this.ennemies = {};
-    this.controlManager = null;
-
   }
 
   setImages(images){
@@ -83,14 +81,17 @@ export class CanvasManager {
   draw(){
 
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ship.draw();
-    if (this.controlManager){
+
+    /*
+      SHIP MANAGEMENT
+    */
+    if (this.controlManager && this.ship){
       if(this.controlManager.firePressed){
 
-        let bullet = new Bullet(this.ctx, this.ship.bullet_start.x,
-          this.ship.bullet_start.y, this.images['bullet_1']);
-        // console.log('fire!! bID ' + bullet.ID + 'bullet_start_x ' + this.ship.bullet_start.x +
-        //   ' bullet_start_y ' + this.ship.bullet_start.y
+        let bullet = new Bullet(this.ctx, this.ship.front.x,
+          this.ship.front.y, this.images['bullet_1']);
+        // console.log('fire!! bID ' + bullet.ID + 'front_x ' + this.ship.front.x +
+        //   ' front_y ' + this.ship.front.y
         // );
         this.bullets[bullet.ID] = bullet
         this.controlManager.firePressed = false;
@@ -104,6 +105,10 @@ export class CanvasManager {
         this.ship.moveDown();
       }
     }
+
+    /*
+      ENNEMIES MANAGEMENT
+    */
     this.ennemyAppereance--;
     //ennemyAppearance draws circle every random time * 10ms
     if(this.ennemyAppereance < 0){
@@ -117,18 +122,40 @@ export class CanvasManager {
       this.ennemyAppereance = Math.floor(Math.random() * 100) + 10;
     }
 
-    // ennemies and bullets are generated
+    /*
+      COLLISION DETECTION BEGIN
+    */
+    // put all elements in the quad tree
     this.fill_quadTree();
 
+    if(this.ship){
+      let ship_candidates = this.quadTree.retrieve(this.ship);
+
+      ship_candidates.forEach((candidate) => {
+        if(candidate.type == SHAPE_TYPE.S_ENNEMY){
+          let my_candidates = [];
+          if(this.ship.hits(candidate)){
+            my_candidates.push(candidate);
+            //GAME OVER process or Ship life -1
+            this.quadTree.removeObject(this.ship);
+            this.quadTree.removeObject(candidate);
+            this.ship = null;
+            delete this.ennemies[candidate.ID];
+          }
+          console.log('candidates for ship ' + this.ship.ID + ' coordx ' + this.ship.front.x + ' coordy ' + this.ship.front.y + ' candidates ');
+          console.log(my_candidates);
+        }
+      });
+    }
     for(var b_key in this.bullets){
       let bullet = this.bullets[b_key];
 
       // Quadtree.retrieve returns an array
       let candidates = this.quadTree.retrieve(bullet);
       candidates.forEach((candidate) => {
-        let my_candidates = [];
+        // let my_candidates = [];
         if(candidate.type == SHAPE_TYPE.S_ENNEMY){
-          my_candidates.push(candidate);
+          // my_candidates.push(candidate);
           if(bullet.hits(candidate)){
             this.quadTree.removeObject(bullet);
             this.quadTree.removeObject(candidate);
@@ -142,8 +169,19 @@ export class CanvasManager {
       this.quadTree.cleanup();
     }
 
+    /*
+      COLLISION DETECTION END
+    */
+
+    /*
+      DRAW ELEMENTS IN CANVAS
+    */
+    if(this.ship){
+      this.ship.draw();
+    }
+
     this.bullets = this.draw_elements(this.bullets);
-    console.log(this.bullets);
+    // console.log(this.bullets);
     this.ennemies = this.draw_elements(this.ennemies);
 
   }
@@ -176,7 +214,9 @@ export class CanvasManager {
 
   fill_quadTree(){
     this.quadTree.clear();
-    this.quadTree.insert(this.ship);
+    if(this.ship){
+      this.quadTree.insert(this.ship);
+    }
 
     for(var key in this.bullets){
       this.quadTree.insert(this.bullets[key]);

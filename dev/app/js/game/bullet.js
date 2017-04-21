@@ -14,19 +14,18 @@ export class Bullet extends Shape {
   }
 
   hits(candidate){
-      let candidate_down = candidate.y + candidate.height
       if(this.front.x >= candidate.x
         && this.front.y >= candidate.y
-        && this.front.y <= candidate_down){
+        && this.front.y <= candidate.y + candidate.height){
 
-        console.log('hit!!!!! bID: ' + this.ID + ' bullet_x ' + this.front.x +
-                    ' bullet_y ' + this.front.y +
-                    ' candidateID ' + candidate.ID +
-                    ' candidate_x ' + candidate.x +
-                    ' candidate_y ' + candidate.y +
-                    ' candidate_y_down ' + candidate_down +
-                    ' candidate_type ' + candidate.type
-                   );
+        // console.log('hit!!!!! bID: ' + this.ID + ' bullet_x ' + this.front.x +
+        //             ' bullet_y ' + this.front.y +
+        //             ' candidateID ' + candidate.ID +
+        //             ' candidate_x ' + candidate.x +
+        //             ' candidate_y ' + candidate.y +
+        //             ' candidate_y_down ' + candidate_down +
+        //             ' candidate_type ' + candidate.type
+        //            );
         return true;
       }
       else{
