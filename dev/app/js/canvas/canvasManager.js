@@ -126,7 +126,7 @@ export class CanvasManager {
       COLLISION DETECTION BEGIN
     */
     // put all elements in the quad tree
-    this.fill_quadTree();
+    this.fillQuadTree();
 
     if(this.ship){
       let ship_candidates = this.quadTree.retrieve(this.ship);
@@ -176,17 +176,24 @@ export class CanvasManager {
     /*
       DRAW ELEMENTS IN CANVAS
     */
+
+    /*background*/
+    this.drawBackground();
+    
+    /*ship*/
     if(this.ship){
       this.ship.draw();
     }
 
-    this.bullets = this.draw_elements(this.bullets);
+    /*ship bullets*/
+    this.bullets = this.drawElements(this.bullets);
     // console.log(this.bullets);
-    this.ennemies = this.draw_elements(this.ennemies);
+    /*ennemies*/
+    this.ennemies = this.drawElements(this.ennemies);
 
   }
 
-  draw_elements(elements){
+  drawElements(elements){
     for(var key in elements){
       let element = elements[key];
       let condition = false;
@@ -212,7 +219,15 @@ export class CanvasManager {
     return elements;
   }
 
-  fill_quadTree(){
+  drawBackground(){
+    this.ctx.beginPath();
+    this.ctx.drawImage(this.images['BG'], 0, 0,
+                       this.canvas.width, this.canvas.height);
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+
+  fillQuadTree(){
     this.quadTree.clear();
     if(this.ship){
       this.quadTree.insert(this.ship);

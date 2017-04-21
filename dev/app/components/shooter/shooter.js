@@ -15,7 +15,8 @@ export class ShooterComponent {
     this.imagesPreloader = new ImagesPreloader(
         ['../img/warrior_1.png',
          '../img/bullet_1.png',
-         '../img/drone_1_reverse.png'
+         '../img/drone_1_reverse.png',
+         '../img/BG.png'
         ],
         this.initCanvasManager(images)
     );
