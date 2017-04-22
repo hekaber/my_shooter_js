@@ -1,38 +1,37 @@
 export class ImagesPreloader{
-  constructor(images, callback){
-    this.callback = callback;
+  constructor(images){
     this.nProcessed = 0;
     this._aImages = {};
     this.nImages = images.length;
-
-    for(let i=0; i < images.length; i++){
-      this.preload(images[i]);
-    }
+    this.images = images;
   }
 
-  getImages(){
-      return this._aImages;
+  loadImages(){
+    return new Promise(
+      (resolve, reject) => {
+        for(let i=0; i < this.nImages; i++){
+          this.preload(resolve, reject, this.images[i]);
+        }
+      }
+    );
   }
 
-  preload(image){
+  preload(resolve, reject, image){
     let oImage = new Image();
     let index = image.split("/");
     let name = index[index.length - 1].split(".")[0];
 
-    oImage.onload = this.onComplete;
-    oImage.onerror = this.onError;
+    oImage.onload = () => {
+      this.nProcessed++;
+      if(this.nProcessed >= this.nImages){
+        resolve(this._aImages);
+      }
+    };
+    oImage.onerror = () => {
+      reject(Error('One of the images has not been loaded properly'));
+    }
+
     oImage.src = image;
     this._aImages[name] = oImage;
-  }
-
-  onComplete(){
-    this.nProcessed++;
-    if(this.nProcessed >= this.nImages){
-      this.callback(this._aImages);
-    }
-  }
-
-  onError(){
-    console.log('error');
   }
 }

@@ -11,22 +11,21 @@ export class ShooterComponent {
     this.content = document.getElementById('game_display');
     this.initUI();
     let images = null;
-
-    this.imagesPreloader = new ImagesPreloader(
+    let imagesPreloader = new ImagesPreloader(
         ['../img/warrior_1.png',
          '../img/bullet_1.png',
          '../img/drone_1_reverse.png',
          '../img/BG.png'
-        ],
-        this.initCanvasManager(images)
+        ]
     );
+    imagesPreloader.loadImages().then((loadedImages) => {
+      this.initCanvasManager(loadedImages);
+    });
 
-    console.log(this.imagesPreloader);
+    console.log(imagesPreloader);
 
     // add eventlisteners on play and pause buttons
     document.getElementById("play").addEventListener('click', _ => {
-      let images = this.imagesPreloader.getImages();
-      this.canvasManager.setImages(images)
       this.canvasManager.createShip();
       this.startGame();
     });
@@ -36,11 +35,12 @@ export class ShooterComponent {
     });
   }
 
-  initCanvasManager(){
+  initCanvasManager(images){
     try {
       this.canvasManager = new CanvasManager(
         document.getElementById('shooterCanvas').getContext("2d"),
-        document.getElementById('shooterCanvas')
+        document.getElementById('shooterCanvas'),
+        images
       );
 
 

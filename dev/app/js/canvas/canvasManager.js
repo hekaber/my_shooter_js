@@ -8,7 +8,7 @@ import {ControlManager} from '../control/controlManager';
 const FRAMES_PER_SEC = 60;
 
 export class CanvasManager {
-  constructor(ctx, canvas){
+  constructor(ctx, canvas, images){
     this.animreqID = 0;
     this.fps = 30;
     this.fpsInterval = 1000 / this.fps;
@@ -19,6 +19,7 @@ export class CanvasManager {
     this.bullets = {};
     this.ennemies = {};
     this.controlManager = null;
+    this.images = images;
 
     //ennemyAppereance between every 100ms and 1s
     this.ennemyAppereance = Math.floor(Math.random() * 100) + 10;
@@ -179,7 +180,7 @@ export class CanvasManager {
 
     /*background*/
     this.drawBackground();
-    
+
     /*ship*/
     if(this.ship){
       this.ship.draw();
