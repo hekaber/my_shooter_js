@@ -4,7 +4,7 @@ export function shooterSkeleton(data){
     return `
       <div class="game_container" id="game_display">
         <h1>${data.gameTitle}</h1>
-        <canvas id="shooterCanvas" width="900" height="320"></canvas>
+        <canvas id="shooterCanvas" width="980" height="500"></canvas>
         <div id="ships_display">
           <h1>${data.shipsHeader}</h1>
           <ul id="ships_list"></ul>
