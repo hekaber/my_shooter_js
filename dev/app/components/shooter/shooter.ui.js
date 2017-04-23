@@ -9,6 +9,7 @@ export function shooterSkeleton(data){
           <h1>${data.shipsHeader}</h1>
           <ul id="ships_list"></ul>
         </div>
+        <div id="log"></div>
         <div id="board">
           <button type="button" name="play" id="play">Play</button>
           <button type="button" name="pause" id="pause">Pause</button>

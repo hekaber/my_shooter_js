@@ -1,6 +1,8 @@
 import {shooterSkeleton} from './shooter.ui';
 import {CanvasManager} from '../../js/canvas/canvasManager';
 import { ImagesPreloader } from '../../providers/imagesPreloader';
+import { AudioPreloader} from '../../providers/audioPreloader';
+
 
 export class ShooterComponent {
 
@@ -18,11 +20,21 @@ export class ShooterComponent {
          '../img/BG.png'
         ]
     );
-    imagesPreloader.loadImages().then((loadedImages) => {
+    imagesPreloader.load().then((loadedImages) => {
       this.initCanvasManager(loadedImages);
     });
 
-    console.log(imagesPreloader);
+    let audiosPreloader = new AudioPreloader(
+      ['../audio/game_music.mp3',
+       '../audio/expl_01.mp3',
+       '../audio/sfx_laser1.mp3'
+      ]
+    );
+
+    audiosPreloader.load().then((loadedAudios) => {
+      this.canvasManager.setAudios(loadedAudios);
+      console.log(loadedAudios);
+    });
 
     // add eventlisteners on play and pause buttons
     document.getElementById("play").addEventListener('click', _ => {
@@ -54,10 +66,12 @@ export class ShooterComponent {
 
     this.canvasManager.setKeyListeners();
     this.canvasManager.startAnimate();
+    this.canvasManager.startAudio();
   }
 
   pauseGame(){
     this.canvasManager.unsetKeyListeners();
+    this.canvasManager.pauseAudio();
     this.canvasManager.stopAnimate();
   }
 

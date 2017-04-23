@@ -4,8 +4,10 @@ import {Bullet} from '../game/bullet';
 import {SimpleEnnemy} from '../game/simpleEnnemy';
 import {CanvasException} from '../exceptions/canvas';
 import {ControlManager} from '../control/controlManager';
+import { AudioManager } from '../control/audioManager';
 
 const FRAMES_PER_SEC = 60;
+
 
 export class CanvasManager {
   constructor(ctx, canvas, images){
@@ -19,6 +21,7 @@ export class CanvasManager {
     this.bullets = {};
     this.ennemies = {};
     this.controlManager = null;
+    this.audioManager = null;
     this.images = images;
 
     //ennemyAppereance between every 100ms and 1s
@@ -47,6 +50,10 @@ export class CanvasManager {
 
   setImages(images){
     this.images = images;
+  }
+
+  setAudios(audios){
+    this.audioManager = new AudioManager(audios);
   }
 
   createShip(){
@@ -79,6 +86,18 @@ export class CanvasManager {
     }
   }
 
+  startAudio(){
+    if(this.audioManager){
+      this.audioManager.startMusic();
+    }
+  }
+
+  pauseAudio(){
+    if(this.audioManager){
+      this.audioManager.pauseMusic();
+    }
+  }
+
   draw(){
 
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -94,7 +113,8 @@ export class CanvasManager {
         // console.log('fire!! bID ' + bullet.ID + 'front_x ' + this.ship.front.x +
         //   ' front_y ' + this.ship.front.y
         // );
-        this.bullets[bullet.ID] = bullet
+        this.bullets[bullet.ID] = bullet;
+        this.audioManager.playFire();
         this.controlManager.firePressed = false;
       }
       else if(this.controlManager.upPressed && this.ship.isOverZero()){
@@ -148,6 +168,7 @@ export class CanvasManager {
         }
       });
     }
+
     for(var b_key in this.bullets){
       let bullet = this.bullets[b_key];
 
@@ -158,6 +179,7 @@ export class CanvasManager {
         if(candidate.type == SHAPE_TYPE.S_ENNEMY){
           // my_candidates.push(candidate);
           if(bullet.hits(candidate)){
+            this.audioManager.playExpl1();
             this.quadTree.removeObject(bullet);
             this.quadTree.removeObject(candidate);
             delete this.bullets[bullet.ID];
