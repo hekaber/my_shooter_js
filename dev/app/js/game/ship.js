@@ -12,6 +12,8 @@ export class Ship extends Shape {
 
     this.type = SHAPE_TYPE.SHIP;
     this.dy = 4;
+    this.collapseCount = 0;
+    this.toggle = true;
   }
 
   hits(candidate){
@@ -34,6 +36,26 @@ export class Ship extends Shape {
     else {
       return false;
     }
+  }
+
+  draw(){
+    this.ctx.beginPath();
+    // if(this.collapseCount > 0){
+    //   if(this.toggle) this.ctx.fillStyle = 'rgba(255, 255, 255, 0)';
+    //   if(this.collapseCount % 10 == 0) this.toggle = false;
+    //   this.collapseCount--;
+    // }
+    this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+
+  collapse(){
+      this.collapseCount = 100;
+  }
+
+  setLifes(lifes){
+
   }
 
   moveUp(){

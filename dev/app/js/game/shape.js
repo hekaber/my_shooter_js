@@ -1,8 +1,9 @@
 export const SHAPE_TYPE = {
-  NONE : -1,
-  SHIP: 0,
-  BULLET: 1,
-  S_ENNEMY: 2
+  NONE     : -1,
+  SHIP     : 0,
+  BULLET   : 1,
+  S_ENNEMY : 2,
+  LIFE     : 3
 }
 
 export class Shape {

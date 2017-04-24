@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Audiowide');
+
 * {
   padding: 0;
   margin: 0;
@@ -16,4 +18,35 @@ canvas {
 *.fadeIn {
   opacity: 1;
   transition: 0.2s ease;
+}
+
+.home_container {
+  font-family: 'Audiowide', cursive;
+}
+
+.home_container h1 {
+  font-size: 20px;
+}
+
+#presentation {
+  width: 980px;
+  height: 500px;
+}
+
+#playBtn {
+  display:inline-block;
+  color:#444;
+  border:1px solid #CCC;
+  background:#DDD;
+  box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+  cursor:pointer;
+  vertical-align:middle;
+  width: 200px;
+  padding: 5px;
+  text-align: center;
+}
+
+#playBtn:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
 }

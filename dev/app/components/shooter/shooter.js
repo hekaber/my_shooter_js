@@ -17,7 +17,8 @@ export class ShooterComponent {
         ['../img/warrior_1.png',
          '../img/bullet_1.png',
          '../img/drone_1_reverse.png',
-         '../img/BG.png'
+         '../img/BG.png',
+         '../img/heart.png'
         ]
     );
     imagesPreloader.load().then((loadedImages) => {

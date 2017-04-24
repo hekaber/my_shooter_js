@@ -1,16 +1,15 @@
 // dev/app/pages/home/home.js
 import {homeSkeleton} from './home.ui';
-import { ShooterComponent } from '../../components/shooter/shooter.js';
-import { FacebookComponent } from '../../components/facebook/facebook.js';
-import { UnsplashService } from '../../providers/unsplash/unsplash-service.js';
+import { GameTitleComponent } from '../../components/gameTitle/gametitle';
+import { FacebookComponent } from '../../components/facebook/facebook';
+import { UnsplashService } from '../../providers/unsplash/unsplash-service';
 
 export class HomePage {
   constructor(appBody){
     this.appBody = appBody;
     this.pageTitle = 'My Shooter';
     this.initUI();
-    this.initShooter();
-    this.initFBUI();
+    this.initGameTitle();
   }
 
   initUI(){
@@ -27,8 +26,8 @@ export class HomePage {
 
   }
 
-  initShooter(){
-    this.shooter = new ShooterComponent(document.getElementsByTagName('section')[0]);
+  initGameTitle(){
+    this.gameTitle = new GameTitleComponent(document.getElementsByTagName('section')[0]);
   }
 
   initFBUI(){

@@ -1,9 +1,10 @@
-import {Ship} from '../game/ship';
-import {SHAPE_TYPE} from '../game/shape';
-import {Bullet} from '../game/bullet';
-import {SimpleEnnemy} from '../game/simpleEnnemy';
-import {CanvasException} from '../exceptions/canvas';
-import {ControlManager} from '../control/controlManager';
+import { Ship } from '../game/ship';
+import { SHAPE_TYPE } from '../game/shape';
+import { Bullet } from '../game/bullet';
+import { SimpleEnnemy } from '../game/simpleEnnemy';
+import { Board } from '../game/board';
+import { CanvasException } from '../exceptions/canvas';
+import { ControlManager } from '../control/controlManager';
 import { AudioManager } from '../control/audioManager';
 
 const FRAMES_PER_SEC = 60;
@@ -46,6 +47,8 @@ export class CanvasManager {
     else {
       throw new CanvasException("Context is undefined!!");
     }
+    this.board = new Board(ctx, canvas, 0, 0, this.images['heart']);
+    this.board.init();
   }
 
   setImages(images){
@@ -102,6 +105,9 @@ export class CanvasManager {
 
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    /*
+      GAME BOARD
+    */
     /*
       SHIP MANAGEMENT
     */
@@ -160,7 +166,16 @@ export class CanvasManager {
             //GAME OVER process or Ship life -1
             this.quadTree.removeObject(this.ship);
             this.quadTree.removeObject(candidate);
-            this.ship = null;
+            this.board.dropLife();
+
+            if(this.board.nbLifes > 0){
+              this.ship.collapse();
+            }
+            else {
+              // GAME OVER
+              this.ship = null;
+            }
+
             delete this.ennemies[candidate.ID];
           }
           console.log('candidates for ship ' + this.ship.ID + ' coordx ' + this.ship.front.x + ' coordy ' + this.ship.front.y + ' candidates ');
@@ -180,6 +195,7 @@ export class CanvasManager {
           // my_candidates.push(candidate);
           if(bullet.hits(candidate)){
             this.audioManager.playExpl1();
+            this.board.setScoreIncrement(100);
             this.quadTree.removeObject(bullet);
             this.quadTree.removeObject(candidate);
             delete this.bullets[bullet.ID];
@@ -202,7 +218,7 @@ export class CanvasManager {
 
     /*background*/
     this.drawBackground();
-
+    this.board.draw();
     /*ship*/
     if(this.ship){
       this.ship.draw();
