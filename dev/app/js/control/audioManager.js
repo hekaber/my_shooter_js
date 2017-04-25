@@ -1,7 +1,8 @@
 export const AUDIO_TYPE = {
   MUSIC  : 'game_music',
   FIRE   : 'sfx_laser1',
-  EXPL_1 : 'expl_01'
+  EXPL_1 : 'expl_01',
+  EXPL_2 : 'expl_02'
 }
 
 export class AudioManager {
@@ -23,6 +24,10 @@ export class AudioManager {
 
   playExpl1(){
     this._playAudio(AUDIO_TYPE.EXPL_1);
+  }
+
+  playExpl2(){
+    this._playAudio(AUDIO_TYPE.EXPL_2);
   }
 
   _playAudio(audioType){
