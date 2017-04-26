@@ -7,7 +7,6 @@ export class Explosion extends Shape{
     this.imgCount = 0;
     this.drawInterval = 10;
     this.type = SHAPE_TYPE.EXPL;
-    console.dir(this.images);
   }
 
   draw(){
@@ -20,7 +19,6 @@ export class Explosion extends Shape{
       this.ctx.fill();
       this.ctx.closePath();
       this.imgCount++;
-      console.log(this.imgCount);
     }
   }
 }
