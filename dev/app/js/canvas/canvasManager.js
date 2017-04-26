@@ -2,6 +2,7 @@ import { Ship } from '../game/ship';
 import { SHAPE_TYPE } from '../game/shape';
 import { Bullet } from '../game/bullet';
 import { SimpleEnnemy } from '../game/simpleEnnemy';
+import { Explosion } from '../game/explosion';
 import { Board } from '../game/board';
 import { CanvasException } from '../exceptions/canvas';
 import { ControlManager } from '../control/controlManager';
@@ -21,10 +22,16 @@ export class CanvasManager {
     this.ship = null;
     this.bullets = {};
     this.ennemies = {};
+    this.explosions = {};
     this.controlManager = null;
     this.audioManager = null;
     this.images = images;
-
+    this.explosionImages = [
+      images['expl_1'], images['expl_2'], images['expl_3'],
+      images['expl_4'], images['expl_5'], images['expl_6'],
+      images['expl_7'], images['expl_8'], images['expl_9'],
+      images['expl_10'], images['expl_11']
+    ];
     //ennemyAppereance between every 100ms and 1s
     this.ennemyAppereance = Math.floor(Math.random() * 100) + 10;
 
@@ -160,10 +167,11 @@ export class CanvasManager {
 
       ship_candidates.forEach((candidate) => {
         if(candidate.type == SHAPE_TYPE.S_ENNEMY){
-          let my_candidates = [];
+          // let my_candidates = [];
           if(this.ship.hits(candidate)){
-            my_candidates.push(candidate);
+            // my_candidates.push(candidate);
             //GAME OVER process or Ship life -1
+            this.audioManager.playExpl2();
             this.quadTree.removeObject(this.ship);
             this.quadTree.removeObject(candidate);
             this.board.dropLife();
@@ -178,8 +186,8 @@ export class CanvasManager {
 
             delete this.ennemies[candidate.ID];
           }
-          console.log('candidates for ship ' + this.ship.ID + ' coordx ' + this.ship.front.x + ' coordy ' + this.ship.front.y + ' candidates ');
-          console.log(my_candidates);
+          // console.log('candidates for ship ' + this.ship.ID + ' coordx ' + this.ship.front.x + ' coordy ' + this.ship.front.y + ' candidates ');
+          // console.log(my_candidates);
         }
       });
     }
@@ -194,12 +202,17 @@ export class CanvasManager {
         if(candidate.type == SHAPE_TYPE.S_ENNEMY){
           // my_candidates.push(candidate);
           if(bullet.hits(candidate)){
-            this.audioManager.playExpl1();
+
             this.board.setScoreIncrement(100);
             this.quadTree.removeObject(bullet);
             this.quadTree.removeObject(candidate);
             delete this.bullets[bullet.ID];
             delete this.ennemies[candidate.ID];
+            this.audioManager.playExpl1();
+            let explosion = new Explosion(
+              this.ctx, candidate.x, candidate.y, this.explosionImages
+            );
+            this.explosions[explosion.ID] = explosion;
           }
         }
         // console.log('candidates for bullet ' + bullet.ID + ' coordx ' + bullet.x + ' coordy ' + bullet.y + ' candidates ');
@@ -229,7 +242,17 @@ export class CanvasManager {
     // console.log(this.bullets);
     /*ennemies*/
     this.ennemies = this.drawElements(this.ennemies);
+    /*explosions*/
+    this.explosions = this.drawExplosions(this.explosions);
+  }
 
+  drawExplosions(explosions){
+    for(var key in explosions){
+      let explosion = explosions[key];
+      if(explosion.imgCount >= 11) delete explosions[key];
+      explosion.draw();
+    }
+    return explosions;
   }
 
   drawElements(elements){

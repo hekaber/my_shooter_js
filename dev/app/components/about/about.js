@@ -1,4 +1,5 @@
 import { aboutSkeleton } from './about.ui';
+import { clearComponents } from '../clear-components';
 
 export class AboutComponent {
   constructor(mainContainer){
@@ -8,10 +9,7 @@ export class AboutComponent {
   }
 
   initUI(){
-    let divContent = document.getElementById('home_content');
-    if(divContent){
-      divContent.parentNode.removeChild(divContent);
-    }
+    clearComponents();
 
     let pageSkeleton = this.getPageSkeleton();
 

@@ -1,5 +1,6 @@
-import {shooterSkeleton} from './shooter.ui';
-import {CanvasManager} from '../../js/canvas/canvasManager';
+import { shooterSkeleton } from './shooter.ui';
+import { clearComponents } from '../clear-components';
+import { CanvasManager } from '../../js/canvas/canvasManager';
 import { ImagesPreloader } from '../../providers/imagesPreloader';
 import { AudioPreloader} from '../../providers/audioPreloader';
 
@@ -14,11 +15,22 @@ export class ShooterComponent {
     this.initUI();
     let images = null;
     let imagesPreloader = new ImagesPreloader(
-        ['../img/warrior_1.png',
-         '../img/bullet_1.png',
-         '../img/drone_1_reverse.png',
-         '../img/BG.png',
-         '../img/heart.png'
+        ['./img/warrior_1.png',
+         './img/bullet_1.png',
+         './img/drone_1_reverse.png',
+         './img/BG.png',
+         './img/heart.png',
+         './img/expl_1.png',
+         './img/expl_2.png',
+         './img/expl_3.png',
+         './img/expl_4.png',
+         './img/expl_5.png',
+         './img/expl_6.png',
+         './img/expl_7.png',
+         './img/expl_8.png',
+         './img/expl_9.png',
+         './img/expl_10.png',
+         './img/expl_11.png'
         ]
     );
     imagesPreloader.load().then((loadedImages) => {
@@ -26,9 +38,10 @@ export class ShooterComponent {
     });
 
     let audiosPreloader = new AudioPreloader(
-      ['../audio/game_music.mp3',
-       '../audio/expl_01.mp3',
-       '../audio/sfx_laser1.mp3'
+      ['./audio/game_music.mp3',
+       './audio/expl_01.mp3',
+       './audio/expl_02.mp3',
+       './audio/sfx_laser1.mp3'
       ]
     );
 
@@ -80,6 +93,8 @@ export class ShooterComponent {
     if(this.content){
       this.content.parentNode.removeChild(this.content);
     }
+
+    clearComponents();
 
     let pageSkeleton = this.getPageSkeleton();
 

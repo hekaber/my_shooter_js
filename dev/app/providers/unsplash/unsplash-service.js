@@ -1,4 +1,4 @@
-import {API_KEY} from './apiKey-config';
+import { API_KEY } from './apiKey-config';
 
 export class UnsplashService {
   constructor(){

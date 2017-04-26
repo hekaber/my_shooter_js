@@ -11,10 +11,9 @@ export function shooterSkeleton(data){
         </div>
         <div id="log"></div>
         <div id="board">
-          <button type="button" name="play" id="play">Play</button>
-          <button type="button" name="pause" id="pause">Pause</button>
-          <h1 id="score">Score: <span></span></h1>
+          <div id="play" class="customBtn">Play</div>
+          <div id="pause" class="customBtn">Pause</div>
         </div>
       </div>
-    `
+    `;
 }

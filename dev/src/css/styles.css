@@ -1,5 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Audiowide');
 
+.clearfix:after{
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+.clearfix{
+    display: block;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -22,18 +34,40 @@ canvas {
 
 .home_container {
   font-family: 'Audiowide', cursive;
+  color: #C0C0C0 !important; 
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .home_container h1 {
-  font-size: 20px;
+  font-size: 40px;
+  text-align: left;
+  margin-left: 10px;
 }
 
-#presentation {
-  width: 980px;
-  height: 500px;
+body {
+  width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-#playBtn {
+nav {
+  margin-left: auto;
+  margin-right: äuto;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav ul li {
+    margin: 0px 10px;
+    float: left;
+}
+
+.customBtn {
   display:inline-block;
   color:#444;
   border:1px solid #CCC;
@@ -46,7 +80,7 @@ canvas {
   text-align: center;
 }
 
-#playBtn:active {
+.customBtn:active {
     color:red;
     box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
 }

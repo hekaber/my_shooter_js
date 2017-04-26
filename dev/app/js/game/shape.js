@@ -3,7 +3,8 @@ export const SHAPE_TYPE = {
   SHIP     : 0,
   BULLET   : 1,
   S_ENNEMY : 2,
-  LIFE     : 3
+  LIFE     : 3,
+  EXPL     : 4
 }
 
 export class Shape {

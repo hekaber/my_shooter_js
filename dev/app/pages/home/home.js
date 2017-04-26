@@ -1,19 +1,34 @@
 // dev/app/pages/home/home.js
-import {homeSkeleton} from './home.ui';
-import { GameTitleComponent } from '../../components/gameTitle/gametitle';
-import { FacebookComponent } from '../../components/facebook/facebook';
+import { homeSkeleton } from './home.ui';
+import { ShooterComponent } from '../../components/shooter/shooter';
+import { ScoreChartComponent } from '../../components/scores/scorechart';
+import { AboutComponent } from '../../components/about/about';
 import { UnsplashService } from '../../providers/unsplash/unsplash-service';
+import { FirebaseService } from '../../providers/firebase/firebase-service';
 
 export class HomePage {
   constructor(appBody){
     this.appBody = appBody;
     this.pageTitle = 'My Shooter';
+    this.firebaseService = new FirebaseService();
+
     this.initUI();
-    this.initGameTitle();
+
+    document.getElementById('startBtn').addEventListener('click', _ => {
+        this.initShooter();
+    });
+
+    document.getElementById('scoresBtn').addEventListener('click', _ => {
+      this.initScores();
+    });
+    document.getElementById('aboutBtn').addEventListener('click', _ => {
+      this.initAbout();
+    });
   }
 
   initUI(){
-    let section = document.getElementsByTagName('section')[0]
+    let section = document.getElementsByTagName('section')[0];
+
     if(section){
       section.parentNode.removeChild(section);
     }
@@ -26,12 +41,16 @@ export class HomePage {
 
   }
 
-  initGameTitle(){
-    this.gameTitle = new GameTitleComponent(document.getElementsByTagName('section')[0]);
+  initShooter(){
+    this.shooter = new ShooterComponent(document.getElementById('home_content'));
   }
 
-  initFBUI(){
-    this.fbUI = new FacebookComponent(document.getElementsByTagName('section')[0]);
+  initScores(){
+    this.scoreChart = new ScoreChartComponent(document.getElementById('home_content'), this.firebaseService);
+  }
+
+  initAbout(){
+    this.about = new AboutComponent(document.getElementById('home_content'));
   }
 
   getPageSkeleton(){

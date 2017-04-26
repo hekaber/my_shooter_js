@@ -14,7 +14,7 @@ export class ImagesPreloader{
       (resolve, reject) => {
         for(let i=0; i < this.nImages; i++){
           document.getElementById('log').insertAdjacentHTML('beforeend',
-          '<span> Loading image ' + this.images[i] + ', </span></br>');
+          '<span> Loading image ' + this.images[i] + ', </span>');
           this._preload(resolve, reject, this.images[i]);
         }
       }
