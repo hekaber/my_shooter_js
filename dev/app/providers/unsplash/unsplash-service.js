@@ -3,7 +3,7 @@ import { API_KEY } from './apiKey-config';
 export class UnsplashService {
   constructor(){
     this.API_KEY = API_KEY;
-    this.providerURL = "https://api.unsplash.com/photos/random?count=1&client_id=";
+    this.providerURL = "https://api.unsplash.com/photos/random?count=1&collections=235&client_id=";
   }
 
   getRandomImg(){

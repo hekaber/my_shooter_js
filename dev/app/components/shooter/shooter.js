@@ -7,17 +7,19 @@ import { AudioPreloader} from '../../providers/audioPreloader';
 
 export class ShooterComponent {
 
-  constructor(homeSection){
+  constructor(homeSection, profilePicture){
     this.homeSection = homeSection;
     this.gameTitle = 'My Shooter Game';
     this.shipsHeader = 'Available ships';
     this.content = document.getElementById('game_display');
     this.initUI();
+    this.profilePicture = profilePicture;
     let images = null;
     let imagesPreloader = new ImagesPreloader(
         ['./img/warrior_1.png',
          './img/bullet_1.png',
          './img/drone_1_reverse.png',
+         './img/destroyer_reverse.png',
          './img/BG.png',
          './img/heart.png',
          './img/expl_1.png',
@@ -34,6 +36,8 @@ export class ShooterComponent {
         ]
     );
     imagesPreloader.load().then((loadedImages) => {
+      //we add the boss we got from the profilePicture component
+      loadedImages['boss'] = this.profilePicture;
       this.initCanvasManager(loadedImages);
     });
 

@@ -14,7 +14,7 @@ export class AudioPreloader{
       (resolve, reject) => {
         for(let i=0; i < this.nAudios; i++){
           document.getElementById('log').insertAdjacentHTML('beforeend',
-          '<span> Loading sound ' + this.audios[i] + ', </span></br>');
+          '<span> Loading sound ' + this.audios[i] + ', </span>');
           this._preload(resolve, reject, this.audios[i]);
         }
       }

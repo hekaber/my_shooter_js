@@ -1,6 +1,7 @@
 // dev/app/pages/home/home.js
 import { homeSkeleton } from './home.ui';
 import { ShooterComponent } from '../../components/shooter/shooter';
+import { ProfilePictureComponent } from '../../components/profilepicture/profile-picture';
 import { ScoreChartComponent } from '../../components/scores/scorechart';
 import { AboutComponent } from '../../components/about/about';
 import { UnsplashService } from '../../providers/unsplash/unsplash-service';
@@ -15,7 +16,8 @@ export class HomePage {
     this.initUI();
 
     document.getElementById('startBtn').addEventListener('click', _ => {
-        this.initShooter();
+      this.initProfilePicture();
+        // this.initShooter();
     });
 
     document.getElementById('scoresBtn').addEventListener('click', _ => {
@@ -43,6 +45,10 @@ export class HomePage {
 
   initShooter(){
     this.shooter = new ShooterComponent(document.getElementById('home_content'));
+  }
+
+  initProfilePicture(){
+      this.profilePicture = new ProfilePictureComponent(document.getElementById('home_content'));
   }
 
   initScores(){

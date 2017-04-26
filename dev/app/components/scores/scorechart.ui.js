@@ -6,5 +6,5 @@ export function scoreChartSkeleton(data){
           <ul id="scoresList"></ul>
         </div>
       </div>
-    `
+    `;
 }

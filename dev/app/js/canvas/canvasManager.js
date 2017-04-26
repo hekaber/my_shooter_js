@@ -2,6 +2,7 @@ import { Ship } from '../game/ship';
 import { SHAPE_TYPE } from '../game/shape';
 import { Bullet } from '../game/bullet';
 import { SimpleEnnemy } from '../game/simpleEnnemy';
+import { Boss } from '../game/boss';
 import { Explosion } from '../game/explosion';
 import { Board } from '../game/board';
 import { CanvasException } from '../exceptions/canvas';
@@ -20,6 +21,7 @@ export class CanvasManager {
     this.then = 0;
     this.images = null;
     this.ship = null;
+    this.boss = null;
     this.bullets = {};
     this.ennemies = {};
     this.explosions = {};
@@ -143,17 +145,29 @@ export class CanvasManager {
     /*
       ENNEMIES MANAGEMENT
     */
-    this.ennemyAppereance--;
-    //ennemyAppearance draws circle every random time * 10ms
-    if(this.ennemyAppereance < 0){
+    if(this.board.score <= 200){
+      this.ennemyAppereance--;
+      //ennemyAppearance draws ennemy every random time * 10ms
+      if(this.ennemyAppereance < 0){
 
-      let ennemyImage = this.images['drone_1_reverse'];
-      let ennemyX = this.canvas.width;
-      let ennemyY = Math.floor(Math.random()*(this.canvas.height - Math.floor(ennemyImage.height * 0.25))) + 2 * Math.floor(ennemyImage.height * 0.25);
-      let ennemy = new SimpleEnnemy(this.ctx, ennemyX, ennemyY, ennemyImage);
-      this.ennemies[ennemy.ID] = ennemy;
+        let ennemyImage = this.images['drone_1_reverse'];
+        let ennemyX = this.canvas.width;
+        let ennemyY = Math.floor(Math.random()*(this.canvas.height - Math.floor(ennemyImage.height * 0.25))) + 2 * Math.floor(ennemyImage.height * 0.25);
+        let ennemy = new SimpleEnnemy(this.ctx, ennemyX, ennemyY, ennemyImage);
+        this.ennemies[ennemy.ID] = ennemy;
 
-      this.ennemyAppereance = Math.floor(Math.random() * 100) + 10;
+        this.ennemyAppereance = Math.floor(Math.random() * 100) + 10;
+      }
+    }
+    else {
+      if(!this.boss){
+        this.boss = new Boss(
+          this.ctx, this.canvas.width,
+          Math.floor(this.canvas.height/2),
+          this.images['destroyer_reverse'],
+          this.images['boss']
+        );
+      }
     }
 
     /*
@@ -233,9 +247,15 @@ export class CanvasManager {
     /*background*/
     this.drawBackground();
     this.board.draw();
+
     /*ship*/
     if(this.ship){
       this.ship.draw();
+    }
+
+    if(this.boss){
+      this.boss.draw();
+      this.boss.move();
     }
 
     /*ship bullets*/

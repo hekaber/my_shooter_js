@@ -4,7 +4,8 @@ export const SHAPE_TYPE = {
   BULLET   : 1,
   S_ENNEMY : 2,
   LIFE     : 3,
-  EXPL     : 4
+  EXPL     : 4,
+  BOSS     : 5
 }
 
 export class Shape {
