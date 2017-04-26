@@ -20,6 +20,7 @@ export class Ship extends Shape {
     // for console log
     // let candidate_down = candidate.y + candidate.height;
     if(this.front.x >= candidate.x
+      && this.front.x <= candidate.x + candidate.width
       && this.front.y >= candidate.y
       && this.front.y <= candidate.y + candidate.height){
 
