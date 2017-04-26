@@ -3,7 +3,8 @@
 .idea
 dist
 node_modules
+dev/src/audio
 gulpfile.js
 package.json
 *.bkp
-apiKey-config.js
+*-config.js
