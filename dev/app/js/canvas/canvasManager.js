@@ -222,7 +222,6 @@ export class CanvasManager {
       });
       this.quadTree.cleanup();
     }
-
     /*
       COLLISION DETECTION END
     */

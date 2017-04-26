@@ -11,11 +11,11 @@ export class AudioManager {
   }
 
   startMusic(){
-    this.audios['game_music'].play();
+    this.audios[AUDIO_TYPE.MUSIC].play();
   }
 
   pauseMusic(){
-    this.audios['game_music'].pause();
+    this.audios[AUDIO_TYPE.MUSIC].pause();
   }
 
   playFire(){
