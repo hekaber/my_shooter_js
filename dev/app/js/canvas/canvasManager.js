@@ -210,7 +210,9 @@ export class CanvasManager {
             delete this.ennemies[candidate.ID];
             this.audioManager.playExpl1();
             let explosion = new Explosion(
-              this.ctx, candidate.x, candidate.y, this.explosionImages
+              this.ctx, candidate.x - candidate.width,
+              candidate.y - candidate.height,
+              this.explosionImages
             );
             this.explosions[explosion.ID] = explosion;
           }
