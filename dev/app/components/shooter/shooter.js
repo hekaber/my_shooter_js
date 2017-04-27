@@ -9,7 +9,7 @@ export class ShooterComponent {
 
   constructor(homeSection, profilePicture){
     this.homeSection = homeSection;
-    this.gameTitle = 'My Shooter Game';
+    this.gameTitle = 'The game';
     this.shipsHeader = 'Available ships';
     this.content = document.getElementById('game_display');
     this.initUI();

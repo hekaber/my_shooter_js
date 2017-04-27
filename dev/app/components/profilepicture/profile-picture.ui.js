@@ -2,7 +2,7 @@ export function profilePictureSkeleton(data){
     return `
       <div class="game_container" id="profile_display">
         <div id="presentation">
-          <h1>${data.pageTitle}</h1>
+          <h2>${data.pageTitle}</h2>
           <div id="video_container">
             <video id="camera" width="200" autoplay></video>
           </div>

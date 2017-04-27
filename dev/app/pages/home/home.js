@@ -17,15 +17,14 @@ export class HomePage {
 
     document.getElementById('startBtn').addEventListener('click', _ => {
       this.initProfilePicture();
-        // this.initShooter();
-    });
+    }, false);
 
     document.getElementById('scoresBtn').addEventListener('click', _ => {
       this.initScores();
-    });
+    }, false);
     document.getElementById('aboutBtn').addEventListener('click', _ => {
       this.initAbout();
-    });
+    }, false);
   }
 
   initUI(){
@@ -43,12 +42,9 @@ export class HomePage {
 
   }
 
-  initShooter(){
-    this.shooter = new ShooterComponent(document.getElementById('home_content'));
-  }
-
   initProfilePicture(){
-      this.profilePicture = new ProfilePictureComponent(document.getElementById('home_content'));
+    this.clearNav();
+    this.profilePicture = new ProfilePictureComponent(document.getElementById('home_content'));
   }
 
   initScores(){
@@ -73,7 +69,18 @@ export class HomePage {
     unsplashService.getRandomImg().then((value) => {
       var jsonResponse = JSON.parse(value);
       this.displayBackground(jsonResponse);
+    }).catch((err) => {
+      //if unsplash is down, set default background
+      let emulateResponse = [{urls:{regular: './img/space.jpg'}}];
+      this.displayBackground(emulateResponse);
     });
+  }
+
+  clearNav(){
+    let nav = document.getElementsByTagName('nav')[0];
+    if(nav){
+      nav.parentNode.removeChild(nav);
+    }
   }
 
   displayBackground(data){

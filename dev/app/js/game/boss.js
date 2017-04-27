@@ -7,7 +7,6 @@ export class Boss extends Shape {
     super(ctx, coordX, coordY, image);
     this.profileImage = profileImage;
     this.finalExplosions = [];
-    console.log(this.finalExplosions);
     this.feLenght = 15;
     this.feIndex = 0;
     this.canvas = canvas;

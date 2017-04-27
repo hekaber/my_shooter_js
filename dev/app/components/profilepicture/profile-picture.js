@@ -11,7 +11,6 @@ export class ProfilePictureComponent {
     this.video = null;
     this.profilePicture = new Image();
     this.userMedia = navigator.mediaDevices.getUserMedia(this.contraints);
-    console.log(this.userMedia);
 
     this.userMedia.then(
       (mediaStream) => {
