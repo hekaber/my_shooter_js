@@ -162,11 +162,12 @@ export class CanvasManager {
     else {
       if(!this.boss){
         this.boss = new Boss(
-          this.ctx, this.canvas.width,
+          this.ctx, this.canvas, this.canvas.width,
           Math.floor(this.canvas.height/2),
           this.images['destroyer_reverse'],
           this.images['boss']
         );
+        this.boss.initFinalExplosions(this.explosionImages);
       }
     }
 
@@ -209,19 +210,14 @@ export class CanvasManager {
     for(var b_key in this.bullets){
       let bullet = this.bullets[b_key];
 
-      // Quadtree.retrieve returns an array
+      // Quadtree.retrieve returns an array of candidates for the collision
       let candidates = this.quadTree.retrieve(bullet);
       candidates.forEach((candidate) => {
         // let my_candidates = [];
         if(candidate.type == SHAPE_TYPE.S_ENNEMY){
           // my_candidates.push(candidate);
           if(bullet.hits(candidate)){
-
             this.board.setScoreIncrement(100);
-            this.quadTree.removeObject(bullet);
-            this.quadTree.removeObject(candidate);
-            delete this.bullets[bullet.ID];
-            delete this.ennemies[candidate.ID];
             this.audioManager.playExpl1();
             let explosion = new Explosion(
               this.ctx, candidate.x - candidate.width,
@@ -229,11 +225,39 @@ export class CanvasManager {
               this.explosionImages
             );
             this.explosions[explosion.ID] = explosion;
+            delete this.ennemies[candidate.ID];
+            delete this.bullets[bullet.ID];
+            this.quadTree.removeObject(bullet);
+            this.quadTree.removeObject(candidate);
+
           }
+        }
+        else if(candidate.type == SHAPE_TYPE.BOSS){
+          if(bullet.hits(candidate)){
+            this.board.setScoreIncrement(100);
+            this.audioManager.playExpl1();
+            let explosion = new Explosion(
+              this.ctx, bullet.x,
+              bullet.y,
+              this.explosionImages
+            );
+            this.explosions[explosion.ID] = explosion;
+            delete this.bullets[bullet.ID];
+            this.quadTree.removeObject(bullet);
+            this.boss.decrementLife();
+            if(this.boss.destruction){
+              this.quadTree.removeObject(candidate);
+            }
+            //TODO if candidate is destroyed animate multiple explosions around
+            // the boss image and handle sound explosion frequency
+          }
+
+
         }
         // console.log('candidates for bullet ' + bullet.ID + ' coordx ' + bullet.x + ' coordy ' + bullet.y + ' candidates ');
         // console.log(my_candidates);
       });
+
       this.quadTree.cleanup();
     }
     /*
@@ -254,8 +278,14 @@ export class CanvasManager {
     }
 
     if(this.boss){
-      this.boss.draw();
-      this.boss.move();
+      //a few 5 pixels margin to handle disparition
+      if(this.boss && this.boss.y > this.canvas.heigth + 5){
+        this.boss = null;
+      }
+      else {
+        this.boss.draw();
+        this.boss.move();
+      }
     }
 
     /*ship bullets*/
@@ -281,6 +311,7 @@ export class CanvasManager {
       let element = elements[key];
       let condition = false;
       switch (element.type) {
+        // set the conditions when the shape goes outside the screen
         case SHAPE_TYPE.BULLET:
           condition = element.x <= this.canvas.width;
           break;
@@ -314,6 +345,10 @@ export class CanvasManager {
     this.quadTree.clear();
     if(this.ship){
       this.quadTree.insert(this.ship);
+    }
+
+    if(this.boss){
+      this.quadTree.insert(this.boss);
     }
 
     for(var key in this.bullets){

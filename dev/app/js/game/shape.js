@@ -20,9 +20,7 @@ export class Shape {
 
   draw(){
     this.ctx.beginPath();
-    this.ctx.font="10px Georgia";
     this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-    this.ctx.fillText(this.ID, this.x, this.y);
     this.ctx.fill();
     this.ctx.closePath();
   }
@@ -35,5 +33,9 @@ export class Shape {
     }
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
       s4() + '-' + s4() + s4() + s4();
+  }
+
+  genRandomCoord(min, max){
+    return Math.floor(Math.random() * (max - min + 1) + min);
   }
 }
